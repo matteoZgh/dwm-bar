@@ -12,7 +12,7 @@ dwm_alsa () {
     printf "%s" "$SEP1"
     if [ "$IDENTIFIER" = "unicode" ]; then
     	if [ "$STATUS" = "off" ]; then
-	            printf "🔇"
+	            printf "🔇 --%%"
     	else
     		#removed this line becuase it may get confusing
 	        if [ "$VOL" -gt 0 ] && [ "$VOL" -le 33 ]; then
