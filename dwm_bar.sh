@@ -1,69 +1,42 @@
 #!/bin/sh
 
-# A modular status bar for dwm
-# Joe Standring <git@joestandring.com>
-# GNU GPLv3
+dwm_resources () {
+    MEMUSED=$(free -h | awk '(NR == 2) {print $3}')
+    MEMTOT=$(free -h | awk '(NR == 2) {print $2}')
+    CPU=$(sar -u 1 1 | grep Average | awk '{printf $3}')
 
-# Dependencies: xorg-xsetroot
+    printf "💻 MEM %s/%s CPU %s%%" "$MEMUSED" "$MEMTOT" "$CPU"
+}
 
-# Import functions with "$include /route/to/module"
-# It is recommended that you place functions in the subdirectory ./bar-functions and use: . "$DIR/bar-functions/dwm_example.sh"
+dwm_alsa () {
+	STATUS=$(amixer sget Master | tail -n1 | sed -r "s/.*\[(.*)\]/\1/")
+    VOL=$(amixer get Master | tail -n1 | sed -r "s/.*\[(.*)%\].*/\1/")
+	if [ "$STATUS" = "off" ]; then
+			printf "🔇 --%%"
+	else
+		if [ "$VOL" -gt 0 ] && [ "$VOL" -le 33 ]; then
+			printf "🔈 %s%%" "$VOL"
+		elif [ "$VOL" -gt 33 ] && [ "$VOL" -le 66 ]; then
+			printf "🔉 %s%%" "$VOL"
+		else
+			printf "🔊 %s%%" "$VOL"
+		fi
+	fi
+}
 
-# Store the directory the script is running from
-LOC=$(readlink -f "$0")
-DIR=$(dirname "$LOC")
+dwm_date () {
+    printf " %s" "$(date "+%Y.%m.%d %H:%M")"
+}
 
-# Change the appearance of the module identifier. if this is set to "unicode", then symbols will be used as identifiers instead of text. E.g. [📪 0] instead of [MAIL 0].
-# Requires a font with adequate unicode character support
-export IDENTIFIER="unicode"
+dwm_sysline () {
+	rainstr=$(rainbarf)
+	r1=$(echo $rainstr | cut -d ] -f 2 | cut -d '#' -f 1)
+	r2=$(echo $rainstr | cut -d ] -f 3 | cut -d '#' -f 1)
+	r3=$(echo $rainstr | cut -d ] -f 4 | cut -d '#' -f 1)
+	r4=$(echo $rainstr | cut -d ] -f 5 | cut -d '#' -f 1)
+	r5=$(echo $rainstr | cut -d ] -f 6 | cut -d '#' -f 1)
+	printf "%s" "$r1$r2$r3$r4$r5"
+}
 
-# Change the charachter(s) used to seperate modules. If two are used, they will be placed at the start and end.
-export SEP1=""
-export SEP2=" "
-
-# Import the modules
-#. "$DIR/bar-functions/dwm_countdown.sh"
-#. "$DIR/bar-functions/dwm_alarm.sh"
-#. "$DIR/bar-functions/dwm_transmission.sh"
-#. "$DIR/bar-functions/dwm_cmus.sh"
-#. "$DIR/bar-functions/dwm_mpc.sh"
-#. "$DIR/bar-functions/dwm_spotify.sh"
-. "$DIR/bar-functions/dwm_resources.sh"
-#. "$DIR/bar-functions/dwm_battery.sh"
-#. "$DIR/bar-functions/dwm_mail.sh"
-#. "$DIR/bar-functions/dwm_backlight.sh"
-. "$DIR/bar-functions/dwm_alsa.sh"
-#. "$DIR/bar-functions/dwm_pulse.sh"
-#. "$DIR/bar-functions/dwm_weather.sh"
-#. "$DIR/bar-functions/dwm_vpn.sh"
-#. "$DIR/bar-functions/dwm_networkmanager.sh"
-#. "$DIR/bar-functions/dwm_keyboard.sh"
-#. "$DIR/bar-functions/dwm_ccurse.sh"
-. "$DIR/bar-functions/dwm_date.sh"
-#. "$DIR/bar-functions/dwm_connman.sh"
-#. "$DIR/bar-functions/dwm_loadavg.sh"
-
-# Update dwm status bar every second
-# Append results of each func one by one to a string
-dispstr=" "
-#dispstr="$dispstr$(dwm_connman)"
-#dispstr="$dispstr$(dwm_countdown)"
-#dispstr="$dispstr$(dwm_alarm)"
-#dispstr="$dispstr$(dwm_transmission)"
-#dispstr="$dispstr$(dwm_cmus)"
-#dispstr="$dispstr$(dwm_mpc)"
-#dispstr="$dispstr$(dwm_spotify)"
-dispstr="$dispstr$(dwm_resources)"
-#dispstr="$dispstr$(dwm_battery)"
-#dispstr="$dispstr$(dwm_mail)"
-#dispstr="$dispstr$(dwm_backlight)"
-#dispstr="$dispstr$(dwm_networkmanager)"
-dispstr="$dispstr$(dwm_alsa)"
-#dispstr="$dispstr$(dwm_pulse)"
-#dispstr="$dispstr$(dwm_weather)"
-#dispstr="$dispstr$(dwm_vpn)"
-#dispstr="$dispstr$(dwm_keyboard)"
-#dispstr="$dispstr$(dwm_ccurse)"
-dispstr="$dispstr$(dwm_date)"
-#dispstr="$dispstr$(dwm_loadavg)"
-xsetroot -name "$dispstr"
+P=" "
+xsetroot -name "$P$(dwm_sysline)$P$(dwm_resources)$P$(dwm_alsa)$P$(dwm_date)$P"
