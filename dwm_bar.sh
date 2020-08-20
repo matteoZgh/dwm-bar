@@ -25,18 +25,17 @@ dwm_alsa () {
 }
 
 dwm_date () {
-    printf " %s" "$(date "+%Y.%m.%d %H:%M")"
+    printf " %s" "$(date +%Y.%m.%d' '%H:%M)"
 }
 
-dwm_sysline () {
+dwm_rainbary() {
 	rainstr=$(rainbarf)
-	r1=$(echo $rainstr | cut -d ] -f 2 | cut -d '#' -f 1)
-	r2=$(echo $rainstr | cut -d ] -f 3 | cut -d '#' -f 1)
-	r3=$(echo $rainstr | cut -d ] -f 4 | cut -d '#' -f 1)
-	r4=$(echo $rainstr | cut -d ] -f 5 | cut -d '#' -f 1)
-	r5=$(echo $rainstr | cut -d ] -f 6 | cut -d '#' -f 1)
-	printf "%s" "$r1$r2$r3$r4$r5"
+	r1=$(printf "$rainstr" | cut -d] -f2 | cut -d'#' -f1)
+	r2=$(printf "$rainstr" | cut -d] -f3 | cut -d'#' -f1)
+	r3=$(printf "$rainstr" | cut -d] -f4 | cut -d'#' -f1)
+	r4=$(printf "$rainstr" | cut -d] -f5 | cut -d'#' -f1)
+	r5=$(printf "$rainstr" | cut -d] -f6 | cut -d'#' -f1)
+	printf "$r1$r2$r3$r4$r5"
 }
 
-P=" "
-xsetroot -name "$P$(dwm_sysline)$P$(dwm_resources)$P$(dwm_alsa)$P$(dwm_date)$P"
+xsetroot -name " $(dwm_rainbary) $(dwm_resources) $(dwm_alsa) $(dwm_date) "
