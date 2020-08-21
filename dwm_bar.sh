@@ -25,7 +25,7 @@ dwm_alsa () {
 }
 
 dwm_date () {
-    printf " %s" "$(date +%Y.%m.%d' '%H:%M)"
+	printf " %s  %s" "$(date +%Y.%m.%d)" "$(date +%H:%M)"
 }
 
 dwm_rainbary() {
