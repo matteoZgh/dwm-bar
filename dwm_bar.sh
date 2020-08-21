@@ -5,6 +5,10 @@ dwm_resources () {
     MEMTOT=$(free -h | awk '(NR == 2) {print $2}')
     CPU=$(sar -u 1 1 | grep Average | awk '{printf $3}')
 
+	if [ $(echo "$CPU < 10" | bc) -eq 1 ]; then
+		CPU="0"$CPU
+	fi
+
     printf "💻 MEM %s/%s CPU %s%%" "$MEMUSED" "$MEMTOT" "$CPU"
 }
 
