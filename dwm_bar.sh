@@ -34,12 +34,12 @@ dwm_date () {
 
 dwm_rainbary() {
 	rainstr=$(rainbarf)
-	r1=$(printf "$rainstr" | cut -d] -f2 | cut -d'#' -f1)
-	r2=$(printf "$rainstr" | cut -d] -f3 | cut -d'#' -f1)
-	r3=$(printf "$rainstr" | cut -d] -f4 | cut -d'#' -f1)
-	r4=$(printf "$rainstr" | cut -d] -f5 | cut -d'#' -f1)
-	r5=$(printf "$rainstr" | cut -d] -f6 | cut -d'#' -f1)
-	printf "$r1$r2$r3$r4$r5"
+	r1="\x04"$(printf "$rainstr" | cut -d] -f2 | cut -d'#' -f1)
+	r2="\x05"$(printf "$rainstr" | cut -d] -f3 | cut -d'#' -f1)
+	r3="\x06"$(printf "$rainstr" | cut -d] -f4 | cut -d'#' -f1)
+	r4="\x07"$(printf "$rainstr" | cut -d] -f5 | cut -d'#' -f1)
+	r5="\x08"$(printf "$rainstr" | cut -d] -f6 | cut -d'#' -f1)
+	printf "$r1$r2$r3$r4$r5\x01"
 }
 
-xsetroot -name " $(dwm_rainbary) $(dwm_resources) $(dwm_alsa) $(dwm_date) "
+xsetroot -name "$(dwm_rainbary) $(dwm_resources) $(dwm_alsa) $(dwm_date)"
