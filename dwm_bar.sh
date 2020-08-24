@@ -34,11 +34,11 @@ dwm_date () {
 
 dwm_rainbary() {
 	rainstr=$(rainbarf)
-	r1=$(printf "$rainstr" | cut -d] -f2 | cut -d'#' -f1)
-	r2=$(printf "$rainstr" | cut -d] -f3 | cut -d'#' -f1)
-	r3=$(printf "$rainstr" | cut -d] -f4 | cut -d'#' -f1)
-	r4=$(printf "$rainstr" | cut -d] -f5 | cut -d'#' -f1)
-	r5=$(printf "$rainstr" | cut -d] -f6 | cut -d'#' -f1)
+	r1=$(echo $rainstr | cut -d] -f2 | cut -d'#' -f1)
+	r2=$(echo $rainstr | cut -d] -f3 | cut -d'#' -f1)
+	r3=$(echo $rainstr | cut -d] -f4 | cut -d'#' -f1)
+	r4=$(echo $rainstr | cut -d] -f5 | cut -d'#' -f1)
+	r5=$(echo $rainstr | cut -d] -f6 | cut -d'#' -f1)
 	printf "x4%sx5%sx6%sx7%sx8%sx1" "$r1" "$r2" "$r3" "$r4" "$r5"
 }
 
