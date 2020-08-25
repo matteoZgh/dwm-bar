@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dwm_rainbary() {
+dwm_rainbarf() {
 	rainstr=$(rainbarf)
 	r1=$(echo $rainstr | cut -d] -f2 | cut -d'#' -f1)
 	r2=$(echo $rainstr | cut -d] -f3 | cut -d'#' -f1)
