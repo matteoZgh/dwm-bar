@@ -7,7 +7,7 @@
 #### 配置
 
 > 1. 字体：SauceCodePro Nerd Font Mono （需下载 nerd-fonts-complete）
-> 2. 图标：
+> 2. 图标：[NerdFonts](https://www.nerdfonts.com/cheat-sheet)
 > 3. rainbarf：dwm_rainbarf.sh (需下载 rainbarf)
 > 4. 资源：dwm_resources.sh
 > 5. 音量：dwm_alsa.sh (需下载 alsa-utils）
